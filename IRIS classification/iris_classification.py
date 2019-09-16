@@ -1,21 +1,23 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[15]:
+# In[44]:
 
 
-# Made by Vinay Sharma in Jupyter Notebook
+# Made by Vinay Sharma
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn import svm
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.model_selection import train_test_split
+from sklearn import svm , neighbors
 
 
-# In[6]:
+# In[109]:
 
 
 df = pd.read_csv('iris.data')
-df.head()
+df.tail()
 
 
 # In[9]:
@@ -25,26 +27,43 @@ X = np.array(df.drop(['class'],1))
 y = np.array(df['class'])
 
 
-# In[16]:
+# In[45]:
 
 
-clf = svm.SVC()
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2)
 
 
-# In[17]:
+# In[114]:
 
 
-clf.fit(X,y)
+clf = neighbors.KNeighborsClassifier()
+clf2 = svm.SVC()
 
 
-# In[27]:
+# In[115]:
 
 
-prediction = clf.predict([[3.0,1.6,4,2]])
-
-print(prediction)
-# In[ ]:
+clf2.fit(X_train,y_train)
+clf.fit(X_train,y_train)
 
 
+# In[118]:
 
+
+a = clf.predict([[5.9,3.0,5.1,1.8]])
+b = clf2.predict([[5.9,3.0,5.1,1.8]])
+
+
+# In[126]:
+
+
+print(a)
+print(b)
+accuracy = clf.score(X_test,y_test)
+
+
+# In[127]:
+
+
+print(accuracy)
 
